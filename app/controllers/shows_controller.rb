@@ -66,6 +66,8 @@ class ShowsController < ApplicationController
     end
     
     # POST /shows/1/book.json
+    # On ajoute les paramètres qu'on va envoyer avec le booking
+    
     def book
         # On crée un nouvel objet booking à partir des paramètres reçus
         @booking = Booking.new(booking_params)
@@ -81,10 +83,15 @@ class ShowsController < ApplicationController
         end
     end
     
+    
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_show
         @show = Show.find(params[:id])
+    end
+    
+    def booking_params
+        params.require(:booking).permit(:user_name, :seats)
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -92,8 +99,6 @@ class ShowsController < ApplicationController
         params.require(:show).permit(:name, :location, :description, :capacity, :price, :image, :date)
     end
     
-    # On ajoute les paramètres qu'on va envoyer avec le booking
-    def booking_params
-        params.require(:booking).permit(:user_name, :seats)
-    end
+    
 end
+
